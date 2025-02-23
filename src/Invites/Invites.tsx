@@ -37,8 +37,8 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
       </div>
       <div className="invites--delimiter" />
       <ul className="invites--items">
-        {invites.map(name => (
-          <li className="invites--item">{name}</li>
+        {invites.map((name, index) => (
+          <li key={`${name}-${index}`} className="invites--item">{name}</li>
         ))}
       </ul>
     </div>

@@ -24,3 +24,6 @@ coverage/
 
 # Misc
 *.log
+
+# TypeScript build info
+tsconfig.tsbuildinfo

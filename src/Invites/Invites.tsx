@@ -17,11 +17,11 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
   );
   const handleSubmit = useCallback(() => {
     onAdd(name);
+    setName("");
   }, [name, onAdd]);
 
-  useEffect(() => {
-    setName("");
-  }, [invites]);
+  // useEffect(() => {
+  // }, [invites]);
 
   return (
     <div className="invites">

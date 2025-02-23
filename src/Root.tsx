@@ -15,7 +15,6 @@ export class Root extends Component<{}, State> {
   };
 
   public toggle(opened: boolean) {
-    console.log(`toggle - ${opened}`);
     // (this.state as any).opened = opened;
     this.setState({ opened });
   }

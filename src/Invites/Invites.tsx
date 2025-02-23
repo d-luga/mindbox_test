@@ -1,10 +1,10 @@
-import React, { FC, useState, useCallback, useEffect } from "react";
+import React, { FC, useState, useCallback } from "react";
 
 import "./style.css";
 
 interface Props {
   invites: string[];
-  onAdd: (name: string) => void;
+  onAdd: (name: string) => boolean;
 }
 
 export const Invites: FC<Props> = ({ invites, onAdd }) => {
@@ -16,12 +16,11 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
     [setName]
   );
   const handleSubmit = useCallback(() => {
-    onAdd(name);
-    setName("");
+    const success = onAdd(name);
+    if (success) {
+      setName("");
+    }
   }, [name, onAdd]);
-
-  // useEffect(() => {
-  // }, [invites]);
 
   return (
     <div className="invites">

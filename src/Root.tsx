@@ -15,7 +15,6 @@ export class Root extends Component<{}, State> {
   };
 
   public toggle(opened: boolean) {
-    // (this.state as any).opened = opened;
     this.setState({ opened });
   }
 
@@ -25,6 +24,8 @@ export class Root extends Component<{}, State> {
 
       return { invites };
     });
+
+    return true;
   }
 
   public render() {

@@ -16,7 +16,7 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
     },
     []
   );
-  
+
   const handleSubmit = useCallback(() => {
     const success = onAdd(name);
     if (success) {

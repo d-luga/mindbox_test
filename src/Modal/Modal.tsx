@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Close } from "../Close";
+import { useEscapeKey } from "../hooks/useEscapeKey";
 import "./style.css";
 
 interface Props {
@@ -14,6 +15,8 @@ export const Modal: FC<Props> = ({ opened, onClose, children }) => {
   useEffect(() => {
     setIsOpen(opened);
   }, [opened]);
+
+  useEscapeKey(onClose);
 
   return (
     <CSSTransition

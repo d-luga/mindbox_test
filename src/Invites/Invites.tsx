@@ -9,18 +9,21 @@ interface Props {
 
 export const Invites: FC<Props> = ({ invites, onAdd }) => {
   const [name, setName] = useState("");
+
   const handleChangeName = useCallback(
-    (event: any) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
     },
-    [setName]
+    []
   );
+  
   const handleSubmit = useCallback(() => {
     const success = onAdd(name);
     if (success) {
       setName("");
     }
   }, [name, onAdd]);
+
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSubmit();

@@ -1,34 +1,27 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useState, useCallback, useEffect } from "react";
 
 import "./style.css";
 
 interface Props {
   invites: string[];
-  onAdd: (name: string) => boolean;
+  onAdd: (name: string) => void;
 }
 
 export const Invites: FC<Props> = ({ invites, onAdd }) => {
   const [name, setName] = useState("");
-
   const handleChangeName = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: any) => {
       setName(event.target.value);
     },
-    []
+    [setName]
   );
-
   const handleSubmit = useCallback(() => {
-    const success = onAdd(name);
-    if (success) {
-      setName("");
-    }
+    onAdd(name);
   }, [name, onAdd]);
 
-  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSubmit();
-    }
-  }, [handleSubmit]);
+  useEffect(() => {
+    setName("");
+  }, [invites]);
 
   return (
     <div className="invites">
@@ -36,7 +29,6 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
         <input
           className="invites--form-input"
           onChange={handleChangeName}
-          onKeyDown={handleKeyDown}
           type="text"
           value={name}
         />
@@ -46,8 +38,8 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
       </div>
       <div className="invites--delimiter" />
       <ul className="invites--items">
-        {invites.map((name, index) => (
-          <li key={`${name}-${index}`} className="invites--item">{name}</li>
+        {invites.map(name => (
+          <li className="invites--item">{name}</li>
         ))}
       </ul>
     </div>

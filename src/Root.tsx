@@ -1,28 +1,42 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { Component } from "react";
+
 import { Modal } from "./Modal";
 import { Invites } from "./Invites";
 
-const Root: FC = () => {
-  const [invites, setInvites] = useState<string[]>([]);
-  const [opened, setOpened] = useState<boolean>(false);
+interface State {
+  invites: string[];
+  opened: boolean;
+}
 
-  const toggle = useCallback((opened: boolean) => {
-    setOpened(opened);
-  }, []);
+export class Root extends Component<{}, State> {
+  public readonly state: State = {
+    invites: [],
+    opened: false
+  };
 
-  const invite = useCallback((name: string) => {
-    setInvites((prevInvites) => [...prevInvites, name]);
-    return true;
-  }, []);
+  public toggle(opened: boolean) {
+    (this.state as any).opened = opened;
+  }
 
-  return (
-    <>
-      <button onClick={() => toggle(true)}>Open invites list</button>
-      <Modal opened={opened} onClose={() => toggle(false)}>
-        <Invites invites={invites} onAdd={invite} />
-      </Modal>
-    </>
-  );
-};
+  public invite(name: string) {
+    this.setState(({ invites }) => {
+      invites.push(name);
 
-export default Root;
+      return { invites };
+    });
+  }
+
+  public render() {
+    return (
+      <>
+        <button onClick={() => this.toggle(true)}>Open invites list</button>
+        <Modal opened={this.state.opened} onClose={() => this.toggle(false)}>
+          <Invites
+            invites={this.state.invites}
+            onAdd={this.invite.bind(this)}
+          />
+        </Modal>
+      </>
+    );
+  }
+}

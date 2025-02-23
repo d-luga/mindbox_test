@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { init as suppress } from "log-suppress";
 
 import "./index.css";
-import Root from "./Root";
+import { Root } from "./Root";
 
 suppress(console);
 

@@ -1,42 +1,50 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { Component, ReactNode } from "react";
 import { CSSTransition } from "react-transition-group";
+
 import { Close } from "../Close";
-import { useEscapeKey } from "../hooks/useEscapeKey";
+
 import "./style.css";
+
+interface State {
+  opened: boolean;
+}
 
 interface Props {
   opened: boolean;
   onClose: () => void;
 }
 
-export const Modal: FC<Props> = ({ opened, onClose, children }) => {
-  const [isOpen, setIsOpen] = useState(opened);
+export class Modal extends Component<Props, State> {
+  public readonly state: State = {
+    opened: false
+  };
 
-  useEffect(() => {
-    setIsOpen(opened);
-  }, [opened]);
+  public static getDerivedStateFromProps(props: Props, state: State): State {
+    return { opened: props.opened };
+  }
 
-  useEscapeKey(onClose);
+  public render(): ReactNode {
+    return (
+      <CSSTransition
+        classNames={{
+          enter: "modal_enter",
+          enterActive: "modal_enter-active",
+          enterDone: "modal_enter-done",
+          exit: "modal_exit",
+          exitActive: "modal_exit-active",
+          exitDone: "modal_exit-done"
+        }}
+        in={this.state.opened}
+        timeout={300}
+      >
+        <div className="modal">
+          <div className="modal--content">
+            <Close onClick={this.props.onClose} />
 
-  return (
-    <CSSTransition
-      classNames={{
-        enter: "modal_enter",
-        enterActive: "modal_enter-active",
-        enterDone: "modal_enter-done",
-        exit: "modal_exit",
-        exitActive: "modal_exit-active",
-        exitDone: "modal_exit-done"
-      }}
-      in={isOpen}
-      timeout={300}
-    >
-      <div className="modal">
-        <div className="modal--content">
-          <Close onClick={onClose} />
-          {children}
+            {this.props.children}
+          </div>
         </div>
-      </div>
-    </CSSTransition>
-  );
-};
+      </CSSTransition>
+    );
+  }
+}

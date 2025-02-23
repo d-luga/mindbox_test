@@ -21,6 +21,11 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
       setName("");
     }
   }, [name, onAdd]);
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  }, [handleSubmit]);
 
   return (
     <div className="invites">
@@ -28,6 +33,7 @@ export const Invites: FC<Props> = ({ invites, onAdd }) => {
         <input
           className="invites--form-input"
           onChange={handleChangeName}
+          onKeyDown={handleKeyDown}
           type="text"
           value={name}
         />
